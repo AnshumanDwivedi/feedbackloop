@@ -1,0 +1,72 @@
+aCreating a complete Vespa application involves several steps, including setting up a Vespa environment, creating a Vespa application package, and deploying it. Here's a basic example of a complete Vespa program for a "Hello, World!" application:
+
+1. Install Vespa:
+   First, make sure you have Vespa installed. You can download it from the official Vespa website: https://vespa.ai/download
+
+2. Create a Vespa Application Package:
+   Create a directory for your Vespa application. In this directory, you'll typically have three main components: `schemas`, `services`, and `hosts`.
+
+   - `schemas`: Create a directory called `schemas` and inside it, place your schema definition in an XML file (e.g., `hello-world.sd`).
+
+   ```xml
+   <?xml version="1.0" encoding="utf-8" ?>
+   <document type="hello-world" mode="index">
+     <fields>
+       <field name="greeting" type="string" />
+     </fields>
+     <default-index>
+       <field name="greeting" />
+     </default-index>
+   </document>
+   ```
+
+   - `services`: Create a directory called `services` and inside it, create a `searchdefinition` XML file (e.g., `hello-world.sd`).
+
+   ```xml
+   <services version="1.0">
+     <container id="container">
+       <document-processing />
+       <document-api />
+       <search />
+     </container>
+   </services>
+   ```
+
+   - `hosts`: Create a directory called `hosts` and create a `host` XML file (e.g., `my-hosts.xml`).
+
+   ```xml
+   <hosts>
+     <host name="my-vespa-host">
+       <alias>my-alias</alias>
+     </host>
+   </hosts>
+   ```
+
+3. Deploy Your Vespa Application:
+   Now, you need to deploy your Vespa application. Navigate to the directory containing your Vespa application package and deploy it using the Vespa deployment tool:
+
+   ```bash
+   vespa-deploy prepare /path/to/your/vespa-application
+   vespa-deploy activate
+   ```
+
+4. Send a "Hello, World!" Document to Vespa:
+   You can interact with your Vespa application by sending data. Create a JSON file (e.g., `hello-world.json`) with the following content:
+
+   ```json
+   {
+     "fields": {
+       "greeting": "Hello, World!"
+     }
+   }
+   ```
+
+   Send this document to Vespa using the Vespa HTTP API:
+
+   ```bash
+   curl -X POST --data-binary @hello-world.json http://localhost:8080/document/v1/hello-world/hello-world/docid/1
+   ```
+
+Now, your "Hello, World!" document is indexed in Vespa, and you can perform various queries and operations on it.
+
+This is a very basic Vespa application. In a real-world scenario, you'd have more complex schema, ranking profiles, and more advanced deployment configurations.
