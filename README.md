@@ -1,3 +1,54 @@
+In Vespa, ranking features are components of the search engine's ranking model that contribute to the calculation of relevance scores for search results. These features allow you to customize and influence how documents are ranked based on their relevance to a user's query. Vespa provides a flexible and extensible ranking framework, enabling developers to define and utilize various features in their ranking profiles. Here's a brief overview:
+
+### Key Points about Ranking Features:
+
+1. **Relevance Score Calculation:**
+   - Ranking features contribute to the calculation of a relevance score for each document in the search result set. The higher the relevance score, the more relevant the document is considered for a given query.
+
+2. **Customizable Ranking Profiles:**
+   - Developers can define custom ranking profiles to specify which features are considered and how much weight each feature carries in the overall relevance score.
+
+3. **Example Features:**
+   - Examples of ranking features include field match, attribute match, proximity, term frequency, and others. These features evaluate different aspects of how well a document matches the user's query.
+
+4. **FieldMatch Feature for Fuzzy Search:**
+   - The `fieldMatch` feature, as mentioned in the previous examples, is one specific ranking feature that can be used for fuzzy search. It allows you to apply fuzzy matching to specific fields and influence the relevance score based on the quality of fuzzy matches.
+
+### Example of Ranking Features in Vespa:
+
+Here's a simplified example of a ranking profile with a custom feature:
+
+```json
+"ranking": {
+  "profile": "my_custom_profile",
+  "listFeatures": {
+    "fieldMatch(name)": {
+      "query": "user_query",
+      "field": "name",
+      "fuzziness": 1
+    },
+    "attributeMatch(category)": {
+      "attribute": "category",
+      "query": "user_query"
+    }
+  }
+}
+```
+
+- In this example, the ranking profile is named "my_custom_profile."
+
+- Two ranking features are applied:
+  - The `fieldMatch(name)` feature applies fuzzy search to the "name" field with a specified fuzziness level.
+  - The `attributeMatch(category)` feature evaluates the match between the "category" attribute and the user's query.
+
+- The relevance scores calculated by these features contribute to the overall ranking of documents.
+
+### User Benefit:
+
+By leveraging ranking features, developers can fine-tune and customize how Vespa evaluates the relevance of documents, providing a more tailored and effective search experience for users.
+
+
+
 In Vespa, you can perform a multi-column query term-based fuzzy search by applying fuzzy matching to multiple fields in your query. This approach allows you to search for similar terms across different columns or attributes. Here's an example using a healthcare scenario where you want to search for patients based on their name or medical condition:
 
 ### Example Vespa Query for Multi-Column Query Term-Based Fuzzy Search:
