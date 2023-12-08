@@ -1,3 +1,34 @@
+Certainly, let's consider an example where you want to create a custom ranking profile that incorporates a specific scoring logic for fuzzy matching in a healthcare scenario. Suppose you want to give higher relevance to documents with exact matches but still consider documents with some level of fuzziness. Here's an illustrative example:
+
+```json
+{
+  "yql": "select * from healthcare_providers where contains(name, 'John Doo');",
+  "ranking": {
+    "profile": "custom_healthcare_profile",
+    "listFeatures": {
+      "exactMatch(name)": {
+        "query": "John Doo",
+        "field": "name",
+        "fuzziness": 0
+      },
+      "fuzzyMatch(name)": {
+        "query": "John Doo",
+        "field": "name",
+        "fuzziness": 2
+      }
+    }
+  }
+}
+```
+
+In this example:
+
+- The `exactMatch(name)` feature is applied to the "name" field with zero fuzziness, ensuring documents with an exact match receive higher relevance.
+
+- The `fuzzyMatch(name)` feature is applied with a fuzziness level of 2, allowing for some degree of variation in the name field.
+
+You can adjust the fuzziness levels and the combination of features based on your specific requirements. The custom ranking profile allows you to influence how Vespa calculates relevance scores for different types of matches, providing a way to incorporate your own scoring logic within the limitations of Vespa's existing features.
+
 In Vespa, ranking features are components of the search engine's ranking model that contribute to the calculation of relevance scores for search results. These features allow you to customize and influence how documents are ranked based on their relevance to a user's query. Vespa provides a flexible and extensible ranking framework, enabling developers to define and utilize various features in their ranking profiles. Here's a brief overview:
 
 ### Key Points about Ranking Features:
