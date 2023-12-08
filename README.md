@@ -1,3 +1,50 @@
+
+Certainly, let's delve into point number 3 from the first answer: **Field-Level Fuzzy Search**.
+
+### Field-Level Fuzzy Search:
+
+In Vespa, field-level fuzzy search allows you to apply fuzzy matching selectively to specific fields, providing a more granular control over where the system tolerates variations in user queries. Here's an example:
+
+### Scenario:
+Consider a healthcare application with a database of patient records. Users may search for patients by their names, but there could be typos or variations in the spelling.
+
+### Example Vespa Query:
+Suppose a user is searching for a patient named "John Doe," but there might be slight typos in the query.
+
+```json
+{
+  "yql": "select * from patients where contains(name, 'Jon Doo');",
+  "ranking": {
+    "features": {
+      "fieldMatch(name)": {
+        "query": "Jon Doo",
+        "field": "name",
+        "fuzziness": 1
+      }
+    }
+  }
+}
+```
+
+### Explanation:
+1. **`contains` Clause:**
+   - The `contains` clause is used to perform a full-text search within the specified field, in this case, the "name" field representing patient names.
+
+2. **Fuzziness Level (`fuzziness: 1`):**
+   - The `fuzziness` parameter is set to 1, indicating that the search engine allows for a maximum of one character difference between the user's query and the indexed terms in the "name" field.
+
+3. **Field-Level Fuzzy Search (`fieldMatch`):**
+   - The `fieldMatch` feature is applied specifically to the "name" field, indicating that fuzzy matching should be applied only to this field.
+
+### Results:
+- Vespa will return results for patients with names similar to "Jon Doo" in the "name" field, allowing for variations like "John Doe."
+
+### User Benefit:
+- Users searching for patient names experience a more forgiving search, where slight typos or variations in the spelling of names are tolerated, leading to accurate and relevant search results.
+
+By employing field-level fuzzy search, you can tailor the application to handle variations in specific fields, ensuring a more precise and user-friendly search experience in contexts where different fields may require different levels of tolerance for variations.
+
+
 Certainly, let's elaborate on point number 4: **Fuzzy Search in Ranking Features**.
 
 ### Fuzzy Search in Ranking Features:
