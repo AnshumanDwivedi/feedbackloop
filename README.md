@@ -1,3 +1,46 @@
+In Vespa, you can perform a multi-column query term-based fuzzy search by applying fuzzy matching to multiple fields in your query. This approach allows you to search for similar terms across different columns or attributes. Here's an example using a healthcare scenario where you want to search for patients based on their name or medical condition:
+
+### Example Vespa Query for Multi-Column Query Term-Based Fuzzy Search:
+
+Suppose a user is searching for a patient or medical condition with a potential typo in the name or condition. You want to perform a fuzzy search across both the "name" and "condition" fields:
+
+```json
+{
+  "yql": "select * from patients where contains(name, 'John Doo') or contains(condition, 'diabtes');",
+  "ranking": {
+    "features": {
+      "fieldMatch(name)": {
+        "query": "John Doo",
+        "field": "name",
+        "fuzziness": 1
+      },
+      "fieldMatch(condition)": {
+        "query": "diabtes",
+        "field": "condition",
+        "fuzziness": 1
+      }
+    }
+  }
+}
+```
+
+- In this example, the query combines two `contains` clauses, allowing the search to span both the "name" and "condition" fields.
+
+- The `fieldMatch` feature is applied separately to each field:
+  - For the "name" field, fuzzy search is applied to the query term "John Doo" with a fuzziness level of 1.
+  - For the "condition" field, fuzzy search is applied to the query term "diabtes" with a fuzziness level of 1.
+
+### Results:
+
+- Vespa will return results that match either the fuzzy conditions in the "name" or "condition" fields.
+
+### User Benefit:
+
+- Users searching for patients or medical conditions with variations or typos in either the name or condition can receive relevant results, providing a more comprehensive and user-friendly search experience.
+
+Adjust the fields and query terms based on your specific use case and the columns you want to include in the multi-column query term-based fuzzy search.
+
+
 Certainly! Let's adapt the examples to a health insurance context, assuming a dataset related to health insurance information:
 
 ### Example 1: Basic Fuzziness for a Policy Type
