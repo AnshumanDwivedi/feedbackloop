@@ -4,7 +4,34 @@ Vespa achieves fuzzy search through features like approximate string matching an
 
 This is particularly useful in scenarios where user input might be prone to errors, enhancing the search experience by providing relevant results despite minor discrepancies in the query terms.
 
+Certainly! In the insurance domain, fuzzy search in Vespa can be beneficial for handling variations in policy names, customer names, and other relevant details. Here are some examples:
 
+1. **Policy Name Variations:**
+   - User Query: "Comprehenzive Car Insurance"
+   - Fuzzy Search: `userQuery("Comprehenzive Car Insurance")`
+   - Result: Retrieves documents related to "Comprehensive Car Insurance" even if there's a slight typo in the query.
+
+2. **Customer Name Spellings:**
+   - User Query: "John Doe"
+   - Fuzzy Search: `userQuery("Jon Doo")`
+   - Result: Retrieves documents related to "John Doe" despite the spelling variations.
+
+3. **Insurance Product Abbreviations:**
+   - User Query: "HLTH Insur"
+   - Fuzzy Search: `userQuery("HLTH Insur")`
+   - Result: Retrieves documents related to "Health Insurance" even if the query contains abbreviations or minor misspellings.
+
+4. **Policy Number Corrections:**
+   - User Query: "Policy# A1234567"
+   - Fuzzy Search: `userQuery("Policy# A1234568")`
+   - Result: Retrieves documents related to the policy with a similar number, accounting for potential typos.
+
+5. **Claim Status Queries:**
+   - User Query: "Claim in process"
+   - Fuzzy Search: `userQuery("Claim in procces")`
+   - Result: Retrieves documents related to claims in process despite a minor typo in the query.
+
+These examples showcase how fuzzy search in Vespa can enhance the search experience within the insurance domain, accommodating variations in user input while still returning relevant results.
 
 Vespa provides several ways to leverage fuzzy search features to accommodate variations in user queries. Here are some key aspects and methods for using fuzzy search in Vespa:
 
